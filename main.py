@@ -21,13 +21,15 @@ while True:
   if x < 0: 
     vx = -0.8*vx
     x = 0
-  sleep(0.01)
+  
   if y + 100 > 300: 
-    vy = -vx
-    y = 199
+    vy = -0.8*vy
+    y = 200
   if y < 0: 
-    vy = -0.8*vx
+    vy = -0.8*vy
     y = 0
 
-  vx += 0.1
+
+  vy += 0.1
+  sleep(0.01)
     
