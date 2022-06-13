@@ -16,6 +16,8 @@ x = 10
 y = 10
 vx = 1
 vy = 2
+ddx = 0.1
+ddy = 0.1
 
 
 def render():
@@ -26,7 +28,7 @@ def render():
   pygame.display.flip()
   
 def state_update():
-  global x, y, vx, vy
+  global x, y, vx, vy, ddx, ddy
   x = x + vx  
   y = y + vy
   if x + box_width > screen_x: 
@@ -43,7 +45,17 @@ def state_update():
     vy = -0.8*vy
     y = 0
   
-  vy += 0.1
+  #vy += 0.1
+  pygame.event.get()
+  keys = pygame.key.get_pressed()
+  if keys[pygame.K_LEFT]:
+      vx -= ddx
+  if keys[pygame.K_RIGHT]:
+      vx += ddx
+  if keys[pygame.K_UP]:
+      vy -= ddy
+  if keys[pygame.K_DOWN]:
+      vy += ddy
 
 def tick():
   state_update()
