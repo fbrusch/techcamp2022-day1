@@ -2,6 +2,7 @@ from lib2to3.pgen2.pgen import ParserGenerator
 from telnetlib import XASCII
 import pygame
 from time import sleep
+from random import randint
 
 pygame.init()
 
@@ -27,11 +28,16 @@ target_h = 10
 target_w = 10
 target_vx = 0
 target_vy = 0
-
+score = 0
+myfont = pygame.font.SysFont("monospace", 16)
 
 def render():
+  
     global x, y, x_target, y_target, target_w, target_h
     pygame.draw.rect(screen, (100, 100, 100), (0, 0, screen_x, screen_y))
+    disclaimertext = myfont.render(f"Score: {score}", 1, (255,255,255))
+    screen.blit(disclaimertext, (10, 10))
+
     pygame.draw.rect(screen, (0, 255, 0), (x, y, box_width, box_height))
     if rect_in_rect(x_target, y_target, target_w, target_h, x, y, box_width,
                     box_height):
@@ -55,7 +61,7 @@ def rect_in_rect(x1, y1, w1, h1, x2, y2, w2, h2):
 
 def state_update():
     global x, y, vx, vy, ddx, ddy, x_target, y_target, target_vx, target_vy,\
-           box_width, box_height
+           box_width, box_height, score
     x = x + vx
     y = y + vy
     if x + box_width > screen_x:
@@ -91,7 +97,10 @@ def state_update():
       if rect_in_rect(x_target, y_target, target_w, 
                         target_h, x, y, box_width,
                         box_height):
-        print("hit!")
+        score += 1
+        x_target = randint(0,screen_x-1)
+        y_target = randint(0,screen_y-1)
+
       else:
         print("miss!")
 
